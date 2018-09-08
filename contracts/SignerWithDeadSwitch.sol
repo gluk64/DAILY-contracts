@@ -13,14 +13,14 @@ contract SignerWithDeadSwitch is SignerRole {
 
     function initiateDeadSwitch(uint _finalizeAfter, bytes _recovererSig) public {
         require(_finalizeAfter > now + 6 * 30 days);
-        require(recoverer == recover(keccak256(_finalizeAfter), _recovererSig);
+        require(recoverer == recover(keccak256(_finalizeAfter), _recovererSig));
         finalizeAfter = _finalizeAfter;
     }
 
     function finalizeDeadSwitch(address _newSigner, bytes _recovererSig) public {
         require(finalizeAfter > 0);
         require(now > finalizeAfter);
-        require(recoverer == recover(keccak256(_newSigner, finalizeAfter), _recovererSig);
+        require(recoverer == recover(keccak256(_newSigner, finalizeAfter), _recovererSig));
         _addSigner(committedSigner);
         finalizeAfter = 0;
     }
